@@ -1,12 +1,23 @@
+const URL_API = '';
 const image = document.querySelector('#image');
 const titulo = document.querySelector('#titulo');
 const tags = document.querySelector('#tags')
 const descripcion = document.querySelector('#descripcion');
 const publish = document.querySelector('#publish');
 
-listcontent=[];
 
-publish.addEventListener('click',() =>{
+const createPost = async (post) => {
+    const url = URL_API + '.json';
+    const create = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(post)
+    });
+    if (create.status === 200) {
+        getInfo();
+};
+}
+
+publish.addEventListener('click', async () => {
     const imageData = image.value;
     const tituloData = titulo.value;
     const tagsData = tags.value;
@@ -16,7 +27,6 @@ publish.addEventListener('click',() =>{
         titulo: tituloData,
         tags: tagsData,
         descripcion: descripcionData,
-    }
-    listcontent.push(postData);
-    console.log(listcontent);
-})
+    };
+    createPost(postData);
+});
