@@ -1,10 +1,11 @@
 const URL_API ='https://js-bb127-default-rtdb.firebaseio.com/';
-const borrar = document.querySelector('#prueba');
+const buttonDelete = document.querySelector('#deletepostbutton');
 
-borrar.addEventListener('click', () => {
 
-    deletePost('-NepfkLjZwZduXFUQIDH');
-    
+buttonDelete.addEventListener('click',(event) => {
+    const elementToRemove = event.target.dataset.post;
+    console.log(elementToRemove)
+    deletePost(elementToRemove);
 });
 const deletePost = async(id) => {
     
@@ -17,4 +18,5 @@ const deletePost = async(id) => {
     };
 
 };
+
 
