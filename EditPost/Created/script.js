@@ -8,7 +8,6 @@
     // Maquetar el contenedor donde se visualizarán la información. 
     // Identificar los elementos fijos y dinámicos
     // Renderizar los elementos HTML dinámicos con JS, 
-
 // Cada vez que haga clic se guardará un artículo dentro del arreglo. 
 // Ejecutar la función del nuevo articulo con el arreglo para representar los datos. 
 
@@ -88,82 +87,82 @@ enviar.addEventListener('click',() => {
 const renderArticle = (infoArticle, index) => {
     console.log(infoArticle)
     
+    //**Creación de elementos: 
     //Img:
     const divImg = document.createElement('div');
     const theCoverImg = document.createElement('img');
-    //Img dinámica: 
-    const imagen = infoArticle.coverImg
-    // console.log(imagen)
-
-    divImg.className = 'card-body';
-    theCoverImg.src = imagen;
-
-    divImg.appendChild(theCoverImg)
-    imgContainer.appendChild(divImg);
-
-    //Crear Título + #:
+    //Título:
     const titleH1 = document.createElement('h1'); 
     const hashP = document.createElement('p');
-    //Crear Título + # dinámicos: 
+    //Contenido:
+    const contentP = document.createElement('p');   
+    //Crear Boton Eliminar: 
+    const buttonDelete = document.createElement('button');
+    //Crear Botón Editar: 
+    const buttonEdit = document.createElement('button');
+   
+    //**Elementos dinámicos: 
+    //Img dinámica:
+    const imagen = infoArticle.coverImg
+        // console.log(imagen)
+    //Título dinámico: 
     const titulo = infoArticle.mainTitle
     const tags = infoArticle.sectionTags
-    // console.log(titulo)
-    // console.log(tags)
+        // console.log(titulo)
+        // console.log(tags)
+    //Contenido dinámico: 
+    const contenido = infoArticle.writeContent
+        // console.log(contenido)
 
+    //***Propiedades: 
+    //img: 
+    divImg.className = 'card-body';
+    theCoverImg.src = imagen;
+    //Título: 
     titleH1.className = 'card-title';
     hashP.className = 'card-text';
     titleH1.textContent = titulo;
     hashP.textContent = tags;
-
-    titleContainer.appendChild(titleH1);
-    titleContainer.appendChild(hashP);
-
-    //Crear Content:
-    const contentP = document.createElement('p');
-    //Crear Content dinámico: 
-    const contenido = infoArticle.writeContent
-    // console.log(contenido)
-
+    //Contenido:
     contentP.className = 'card-text';
     contentP.textContent = contenido;
-
-    contentContainer.appendChild(contentP);
-
-    //Crear Boton Eliminar: 
-    const buttonDelete = document.createElement('button');
-
+    // Botón de eliminar: 
     buttonDelete.className = 'btn btn-primary';
     buttonDelete.textContent = 'Delete';
-    buttonDelete.dataset.item = infoArticle.id;
-
-    buttonsContainer.appendChild(buttonDelete);
+    buttonDelete.dataset.article = infoArticle.id;
+    //Botón de editar: 
+    buttonEdit.className = 'btn btn-primary';
+    buttonEdit.textContent = 'Edit';
+    buttonEdit.dataset.article = infoArticle.id;
     
     //Listener Boton Eliminar: ---- check
     buttonDelete.addEventListener('click',(event) =>{
-        const articleToRemove = event.target.dataset.item
-        deleteArticle(articleToRemove)
+        const articleToRemove = event.target.dataset.article;
+        deleteArticle(articleToRemove);
     });
     
-    //boton Editar: 
-    const buttonEdit = document.createElement('button');
-    
-    buttonEdit.className = 'btn btn-primary';
-    buttonEdit.textContent = 'Edit';
-    buttonEdit.dataset.item = infoArticle.id;
-    
-    buttonsContainer.appendChild(buttonEdit);
-
     //Listener Boton Editar: ---- check
     buttonEdit.addEventListener('click', (event) => {
         console.log(window)
-        const articleToEdit = event.target.dataset.item;
+        const articleToEdit = event.target.dataset.article;
         window.location.href = 'http://127.0.0.1:5500/edit/?id=' + articleToEdit;
     });
 
-// REVISAR CÓDIGO AQUÍ 
+    //***AppendChild: 
+    //img: 
+    divImg.appendChild(theCoverImg)
+    imgContainer.appendChild(divImg);
+    //Título: 
+    titleContainer.appendChild(titleH1);
+    titleContainer.appendChild(hashP);
+    //Contenido: 
+    contentContainer.appendChild(contentP);
+    //Botón de eliminar: 
+    buttonsContainer.appendChild(buttonDelete);
+    //Botón de editar:
+    buttonsContainer.appendChild(buttonEdit);
 
-
-}
+};
 
 //Función para renderizar la lista de Artículos: 
 const renderListArticle = (articleToRender) => {
@@ -199,7 +198,7 @@ const getArticlesApi = async() => {
             const parsed = await response.json();
             const responseParsered = parserResponseFireBase(parsed);
             cleanListArticle()
-            renderArticle(responseParsered)
+            renderListArticle(responseParsered)
             }
     } catch (error) {
             console.error(error)
