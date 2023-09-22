@@ -1,4 +1,4 @@
-const URL_API = 'https://js-80023-default-rtdb.firebaseio.com/';
+const URL_API = ''; //Ponga el fire base que se va usar
 const image = document.querySelector('#image');
 const titulo = document.querySelector('#titulo');
 const tags = document.querySelector('#tags')
@@ -13,7 +13,7 @@ const createPost = async (post) => {
         body: JSON.stringify(post)
     });
     if (create.status === 200) {
-        //getinfo()
+        getinfo()
 
 };
 }
@@ -35,5 +35,10 @@ publish.addEventListener('click', async () => {
         descripcion: descripcionData,
         date: timestamp,
     };
-     await createPost(postData);
+     const response = await createPost(postData);
+     if (response.ok) {
+        window.location.href = "";  // Pongan nombre de la pagina main
+    } else {
+        alert('Failed to create post');
+    }
 });
