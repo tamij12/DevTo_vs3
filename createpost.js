@@ -1,4 +1,4 @@
-const URL_API = '';
+const URL_API = 'https://js-80023-default-rtdb.firebaseio.com/';
 const image = document.querySelector('#image');
 const titulo = document.querySelector('#titulo');
 const tags = document.querySelector('#tags')
@@ -13,7 +13,8 @@ const createPost = async (post) => {
         body: JSON.stringify(post)
     });
     if (create.status === 200) {
-        getInfo();
+        //getinfo()
+
 };
 }
 
@@ -22,11 +23,17 @@ publish.addEventListener('click', async () => {
     const tituloData = titulo.value;
     const tagsData = tags.value;
     const descripcionData = descripcion.value;
+    const currentDate = new Date();
+    const month = currentDate.getMonth() + 1;
+    const date = currentDate.getDate();
+    const timestamp = month + '-' + date;
+
     const postData = {
         image: imageData,
         titulo: tituloData,
         tags: tagsData,
         descripcion: descripcionData,
+        date: timestamp,
     };
-    createPost(postData);
+     await createPost(postData);
 });
