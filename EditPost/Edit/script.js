@@ -27,7 +27,7 @@ const updateArticle = async() => {
     console.log(response)
     console.log(url)
     if(response.status === 200){
-    //window.location.href = 'http://127.0.0.1:5500/create/'
+    window.location.href = 'http://127.0.0.1:5502/DevToPage/post.html'
     }
 };
 
