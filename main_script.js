@@ -2,6 +2,10 @@
 const URL_FIREBASE_Post = 'https://js-80023-default-rtdb.firebaseio.com/.json';
 
 
+const createpost = document.querySelector('#createpost')
+createpost.addEventListener('click',() => {
+    window.location.href= "./createpost.html"
+})
 const parserResponseFireBase = (response) => {
     const parsedResponse = []
         for(const key in response ){
