@@ -1,3 +1,4 @@
+
 const URL_API = 'https://js-80023-default-rtdb.firebaseio.com/';
 const image = document.querySelector('#image');
 const titulo = document.querySelector('#titulo');
@@ -13,7 +14,8 @@ const createPost = async (post) => {
         body: JSON.stringify(post)
     });
     if (create.status === 200) {
-        getinfo()
+
+        //getinfo()
 
 };
 }
