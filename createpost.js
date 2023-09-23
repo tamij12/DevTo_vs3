@@ -1,6 +1,5 @@
 
-const URL_API = 'https://crud-js28g-default-rtdb.firebaseio.com/';
-
+const URL_API = 'https://js-80023-default-rtdb.firebaseio.com/';
 const image = document.querySelector('#image');
 const titulo = document.querySelector('#titulo');
 const tags = document.querySelector('#tags')
@@ -40,7 +39,7 @@ publish.addEventListener('click', async () => {
     };
      const response = await createPost(postData);
      if (response.ok) {
-        window.location.href = "";  // Pongan nombre de la pagina main
+        window.location.href = "main_index.html";  // Pongan nombre de la pagina main
     } else {
         alert('Failed to create post');
     }
