@@ -1,4 +1,6 @@
-const URL_API = ''; //Ponga el fire base que se va usar
+
+const URL_API = 'https://crud-js28g-default-rtdb.firebaseio.com/';
+
 const image = document.querySelector('#image');
 const titulo = document.querySelector('#titulo');
 const tags = document.querySelector('#tags')
@@ -13,7 +15,8 @@ const createPost = async (post) => {
         body: JSON.stringify(post)
     });
     if (create.status === 200) {
-        getinfo()
+
+        //getinfo()
 
 };
 }
