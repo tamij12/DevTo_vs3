@@ -1,23 +1,24 @@
+const URL_FIREBASE = 'https://devto-97a68-default-rtdb.firebaseio.com/';
 const buttonSearch = document.querySelector("#button-search");
 const postsContainer = document.querySelector("#posts-main-search");
 
 const test = [
   {
     cardId: 1,
-    profile: "http.jajjjaj.com",
+    profile: "https://dbkpop.com/wp-content/uploads/2019/01/TXT_Beomgyu_Profile_Blue_Hour.jpg",
     name: "Karishma Shukla",
     date: "07/12/23",
-    title: "react",
+    title: "300 + react Interview Questions",
     tags: ["programing", "database"],
     comments: 8,
     read: "3min read",
   },
   {
     cardId: 2,
-    profile: "http.jajjjaj.com",
+    profile: "https://dbkpop.com/wp-content/uploads/2017/01/april_hello_summer_concept_chaewon_profile.jpg",
     name: "Luias",
     date: "07/12/23",
-    title: "react",
+    title: "awesome things related to react hooks",
     tags: ["programing", "database"],
     comments: 8,
     read: "3min read",
@@ -27,24 +28,64 @@ const test = [
     profile: "http.jajjjaj.com",
     name: "Juan",
     date: "07/12/23",
-    title: "node",
+    title: "gestor de paquetes que permite a las comunidades de JavaScript y Node.js publicar y compartir sus módulos de node con otras personas",
     tags: ["programing", "database"],
     comments: 8,
     read: "3min read",
   },
   {
     cardId: 4,
-    profile: "http.jajjjaj.com",
+    profile: "https://dbkpop.com/wp-content/uploads/2017/01/april_hello_summer_concept_chaewon_profile.jpg",
     name: "Kjilo Shukla",
     date: "07/12/23",
-    title: "react",
+    title: "React fue creado por Jordan Walke, un ingeniero de software de Facebook, quien liberó un primer prototipo de react llamado “FaxJS”.​",
+    tags: ["programing", "database"],
+    comments: 8,
+    read: "3min read",
+  },
+  {
+    cardId: 5,
+    profile: "https://dbkpop.com/wp-content/uploads/2016/11/b1a4_cnu_1-2000x1341.jpg",
+    name: "Karishma Shukla",
+    date: "07/12/23",
+    title: "react love",
+    tags: ["programing", "database"],
+    comments: 8,
+    read: "3min read",
+  },
+  {
+    cardId: 6,
+    profile: "https://dbkpop.com/wp-content/uploads/2023/03/xin_aria_profile.jpg",
+    name: "Alan",
+    date: "07/12/23",
+    title: "El núcleo del lenguaje javascript de lado del cliente consta de algunas características de programación comunes que te permiten hacer cosas como",
+    tags: ["programing", "database"],
+    comments: 8,
+    read: "3min read",
+  },
+  {
+    cardId: 7,
+    profile: "",
+    name: "Ian Derek",
+    date: "07/12/23",
+    title: "react es una biblioteca de JavaScript declarativa, eficiente y flexible para construir interfaces de usuario. Permite componer IUs complejas de pequeñas y aisladas piezas de código llamadas “componentes”.",
+    tags: ["programing", "database"],
+    comments: 8,
+    read: "3min read",
+  },
+  {
+    cardId: 8,
+    profile: "https://dbkpop.com/wp-content/uploads/2023/03/xin_aria_profile.jpg",
+    name: "Park Chanyeol",
+    date: "07/12/23",
+    title: "javascript es un lenguaje de programación o de secuencias de comandos que te permite implementar funciones complejas en páginas web",
     tags: ["programing", "database"],
     comments: 8,
     read: "3min read",
   },
 ];
 
-const renderPostSearch = (postInfo) => {
+const renderPost = (postInfo) => {
 
   const ulPosts = document.querySelector("#posts-main-search");
 
@@ -52,7 +93,7 @@ const renderPostSearch = (postInfo) => {
   name.textContent = postInfo.name;
 
   const date = document.createElement("a");
-  date.textContent = postInfo.date;
+  date.textContent = postInfo.fechaNacimiento;
 
   const nameDateDiv = document.createElement("div");
   nameDateDiv.className = "name__date--container d-flex flex-column";
@@ -61,12 +102,14 @@ const renderPostSearch = (postInfo) => {
   nameDateDiv.appendChild(date);
 
   const profile = document.createElement("img");
+  profile.className = "aImg-card rounded-circle"
+
   profile.src = postInfo.profile;
 
   const spanImg = document.createElement("span");
 
   const aImg = document.createElement("a");
-  aImg.className = "card__comment--image--final d-flex";
+
 
   const divContainerImgProfile = document.createElement("div");
   divContainerImgProfile.className = "card__comment--image--final d-flex";
@@ -205,17 +248,54 @@ const renderPostSearch = (postInfo) => {
 
 const renderListPosts = (list) => {
   list.forEach((post) => {
-    renderPostSearch(post)
+    renderPost(post)
   });
 };
-renderListPosts(test);
 
 const search = (word, listPosts) => {
   const result = listPosts.filter((e) => e.title.includes(word));
   
   console.log(result);
-  return result;
+  renderListPosts(result);
 };
+
+
+const parserResponseFireBase = (response) => {
+  const parsedResponse = []
+      for(const key in response ){
+          const element = {
+              id: key,
+              avatar: response[key].avatar,
+              nombre: response[key].nombre,
+              fechaNacimiento: response[key].fechaNacimiento,
+              descripcion: response[key].descripcion
+          };
+          parsedResponse.push(element)
+      };
+  return parsedResponse;
+};
+
+
+const getInfo = async() => {
+  try {
+      // codigo que se ejecutara por default
+      const url = URL_FIREBASE + '.json'
+      const response = await fetch(url);
+      console.log(response)
+      if(response.status !== 201){
+          const parsed = await response.json();
+          const responseParsered = parserResponseFireBase(parsed);
+        renderListPosts(responseParsered);
+        }
+      
+      // throw new Error('este es un eror en el try')
+  } catch (error) {
+      // codigo a ejecutarse cuando hay un error
+      console.error(error, 'xxxx')
+  }
+};
+
+
 
 buttonSearch.addEventListener("click", (event) => {
   const inputSearch = document.querySelector("#input-search");
@@ -223,6 +303,15 @@ buttonSearch.addEventListener("click", (event) => {
   console.log(wordSearch);
   event.preventDefault();
 
-
   search(wordSearch, test);
 });
+
+
+
+
+
+
+
+
+
+
