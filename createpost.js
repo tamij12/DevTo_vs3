@@ -1,4 +1,6 @@
+
 const URL_API = 'https://crud-js28g-default-rtdb.firebaseio.com/';
+
 const image = document.querySelector('#image');
 const titulo = document.querySelector('#titulo');
 const tags = document.querySelector('#tags')
@@ -13,7 +15,9 @@ const createPost = async (post) => {
         body: JSON.stringify(post)
     });
     if (create.status === 200) {
+
         //getinfo()
+
 };
 }
 
@@ -34,5 +38,10 @@ publish.addEventListener('click', async () => {
         descripcion: descripcionData,
         date: timestamp,
     };
-     await createPost(postData);
+     const response = await createPost(postData);
+     if (response.ok) {
+        window.location.href = "";  // Pongan nombre de la pagina main
+    } else {
+        alert('Failed to create post');
+    }
 });
