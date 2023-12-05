@@ -7,6 +7,12 @@ const descripcion = document.querySelector('#descripcion');
 const publish = document.querySelector('#publish');
 
 
+const returnMain = document.querySelector('#returnMain')
+returnMain.addEventListener('click',() => {
+    window.location.href= "./main_index.html"
+})
+
+
 const createPost = async (post) => {
     const url = URL_API + '.json';
     const create = await fetch(url, {
